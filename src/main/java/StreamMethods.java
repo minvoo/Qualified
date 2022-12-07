@@ -72,7 +72,15 @@ public class StreamMethods {
     Get the role that has the least employees
      */
     public static Optional<EmployeeRole> getRoleWithLeastEmployees(Collection<Employee> employees){
-        employees.stream().collect((Comparator.comparing(, Collectors.counting()));
+
+        Map<EmployeeRole, Long> rolesMap = employees.stream()
+           .collect(Collectors.groupingBy(Employee::getRole, Collectors.counting()));
+
+        Stream<Map.Entry<EmployeeRole, Long>> sorted = rolesMap.entrySet().stream()
+                .sorted((Map.Entry.comparingByValue()));
+
+        EmployeeRole key = sorted.findFirst().get().getKey();
+        return Optional.of(key);
     }
 
     /*
@@ -80,15 +88,20 @@ public class StreamMethods {
     Pay Gap formula: Manager_Salary - Average_Employees_Salary
      */
     public static Optional<Division> getDivisionWithGreatestManagerEmployeePayGap(Collection<Division> divisions){
-        return divisions.stream()
-                .filter(division -> division.)
+            divisions
+                    .stream()
+                    .collect(Collectors.groupingBy(division -> division.getManager()))
+
     }
 
     /*
     Get the best earning employee of given role out of all divisions
      */
     public static Optional<Employee> getBestEarningEmployeeOfRole(Collection<Division> divisions, EmployeeRole role){
-        divisions.stream()
-                .flatMap(d -> d.getEmployees())
+        return divisions.stream()
+                .map(d -> d.getEmployees())
+                .flatMap(Collection::stream)
+                .filter(e -> e.getRole().equals(role))
+                .max((e1,e2)-> e1.getSalary().compareTo(e2.getSalary()));
     }
 }

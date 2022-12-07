@@ -1,0 +1,33 @@
+
+
+RTV Shop
+Please note, that at the moment, Qualified only supports Java 11 - features from newer versions are not available. If you're unsure whether given language feature is supported or not, please refer to Java's changelogs.
+In this challenge, your task is to implement a Data Access Layer for an online RTV shop. The shop sells TVs, soundbars and cables and its backend should allow accessing and filtering these items. The selected architecture is DAO (Data Access Object). Please assure, that all your classes are in separate files and placed in proper package structure (mentioned in the requirements below). All fields, methods and constructors (and the class itself) should be available to use by anyone - other classes, other libraries, etc. Fields should be encapsulated according to Java's standard, with proper getter/setter methods implemented. Do not change the pre-existing classes.
+Pay very close attention to the naming of your classes, fields, properties and methods, as having invalid casing or typos will cause the tests to fail. Follow the standard Java coding conventions: https://www.oracle.com/java/technologies/javase/codeconventions-namingconventions.html
+Package requirements:
+1. All interfaces should be placed in interfaces package.
+2. All classes implementing the interfaces should be placed in dal package.
+3. Do not modify anything in the model package.
+DAO interface requirements:
+1. Implement a generic interface DAO which will serve as a template for all Data Access Objects.
+2. DAO should only be allowed to use with Item objects or its derived classes. In the requirements below, all mentions of "object" or "collection" refer to given DAO's target type.
+3. DAO should define the following CRUD methods:
+4. seed - takes a Collection to initialize the database. Doesn't return anything.
+5. create - accepts an object that is then added to the collection (unless it's already in it). Returns a Boolean value, whether the object has been successfully added to the database.
+6. read - accepts an Integer id that is used to search for an object in the database, and then returns it in an Optional object. If not found, return value should be empty.
+7. readAll - returns a Collection of all objects in the database.
+8. update - accepts an object that is supposed to replace an object already existing in the database, that has the same id. Returns a Boolean value, whether the object has been successfully updated in the database.
+9. Delete - accepts an Integer id that is used to search for an object in the database and then deleted from it. Returns a Boolean value, whether the object has been successfully deleted from the database.
+TVDAO interface requirements:
+1. Implement an interface TVDAO which will serve as a base of a DAO, that supplies TV items.
+2. TVDAO should inherit from DAO<TV>
+3. TVDAO should define a method getTVs, that returns a Collection of TVs after filtering them with the following criteria (in this order): minimum size (Integer), maximum size (Integer), screen type (ScreenType), minimum resolution (Integer).
+SoundbarDAO interface requirements:
+1. Implement an interface SoundbarDAO which will serve as a base of a DAO, that supplies soundbar items.
+2. SoundbarDAO should inherit from DAO<Soundbar>
+3. SoundbarDAO should define a method getSoundbars, that return a Collection of soundbars after filtering then with the following criteria (in this order): minimum channels (Integer), maximum channels (Integer), has subwoofer (Boolean).
+DAO fake database classes:
+1. Create two DAO classes, that will simulate a database behaviour with use of a Set (which must be encapsulated from external access, therefore set as private, and initialized as empty upon instantiation of the class).
+2. TVDAOClass should implement the TVDAO interface
+3. SoundbarDAOClass should implement the SoundbarDAO interface
+4. Implement all interface methods in all classes, according to the logic descriptions above.
